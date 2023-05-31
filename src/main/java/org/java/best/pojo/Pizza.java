@@ -3,10 +3,13 @@ package org.java.best.pojo;
 
 
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
@@ -25,6 +28,10 @@ public class Pizza {
 	private String foto;
 	@Min(value = 1, message = "Il prezzo non può essere minore di 0")
 	private int price;
+	
+	@OneToMany(mappedBy = "pizza")
+	private List<Offerta> offerte;
+	
 	
 	public Pizza() { }
 	public Pizza(String nome, String descrizione, String foto, int price) {
@@ -62,6 +69,12 @@ public class Pizza {
 	}
 	public int getPrice() {
 		return price;
+	}
+	public List<Offerta> getOfferte() {
+		return offerte;
+	}
+	public void setOfferte(List<Offerta> offerte) {
+		this.offerte = offerte;
 	}
 	public void setPrice(int price) {
 		this.price = price;
