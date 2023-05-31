@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Offerte</h1>
+	 <ul>
+		<li
+			th:each="offerta : ${offerte}"
+			th:object="${offerta}"
+		>
+			<h1>[[ *{nomeOfferta} ]]</h1>
+			<h3>Durata offerta  [[ *{dataInizio} ]]  [[ *{dataFine} ]] </h3> 
+			<h3>Sconto: [[ *{sconto} ]]%</h3>
+		</li>
+	</ul>
+	
+</body>
+</html>
