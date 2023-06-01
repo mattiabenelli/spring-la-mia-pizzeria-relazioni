@@ -9,10 +9,14 @@ import org.java.best.service.ServicePizza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class OffertaController {
@@ -44,9 +48,25 @@ public class OffertaController {
 		return "offerta-create";
 	}
 	@PostMapping("/offerte/create")
-	public String offertaPizzeStore(
-			@ModelAttribute Offerta offerta
+	public String offertaPizzeStore(Model model,
+			@Valid @ModelAttribute Offerta offerta,
+			BindingResult bindingResult
 		) {
+		
+		if (bindingResult.hasErrors()) {
+			
+			for (ObjectError err : bindingResult.getAllErrors()) 
+				System.err.println("error: " + err.getDefaultMessage());
+			
+			model.addAttribute("offerta", offerta);
+			model.addAttribute("errors", bindingResult);
+			
+			
+			List<Pizza> pizzas = pizzaService.findAll();
+			model.addAttribute("pizzas", pizzas);
+			
+			return "offerta-create";
+		}
 		
 		offertaService.save(offerta);
 		

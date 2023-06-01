@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Offerta {
@@ -16,9 +19,13 @@ public class Offerta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@FutureOrPresent(message = "la data non può essere precendente ad oggi")
 	private LocalDate dataInizio;
+	@FutureOrPresent(message = "la data non può essere precendente ad oggi")
 	private LocalDate dataFine;
+	@NotBlank(message = "il nome non può essere vuoto")
 	private String nomeOfferta;
+	@Min(value = 1, message = "Il prezzo non può essere minore di 0")
 	private int sconto;
 	
 	@ManyToOne
