@@ -93,13 +93,16 @@ public class OffertaController {
 			BindingResult bindingResult
 		) {
 		
-if (bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			
 			for (ObjectError err : bindingResult.getAllErrors()) 
 				System.err.println("error: " + err.getDefaultMessage());
 			
 			model.addAttribute("offerta", offerta);
 			model.addAttribute("errors", bindingResult);
+			
+			List<Pizza> pizzas = pizzaService.findAll();
+			model.addAttribute("pizzas", pizzas);
 			
 			
 			return "offerta-update";
