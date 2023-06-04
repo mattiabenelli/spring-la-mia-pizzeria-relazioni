@@ -87,10 +87,23 @@ public class OffertaController {
 	}
 	
 	@PostMapping("/offerte/update/{id}")
-	public String updateOfferte(
+	public String updateOfferte(Model model,
 			@PathVariable int id,
-			@ModelAttribute Offerta offerta
+			@Valid @ModelAttribute Offerta offerta,
+			BindingResult bindingResult
 		) {
+		
+if (bindingResult.hasErrors()) {
+			
+			for (ObjectError err : bindingResult.getAllErrors()) 
+				System.err.println("error: " + err.getDefaultMessage());
+			
+			model.addAttribute("offerta", offerta);
+			model.addAttribute("errors", bindingResult);
+			
+			
+			return "offerta-update";
+		}
 
 		offertaService.save(offerta);
 
