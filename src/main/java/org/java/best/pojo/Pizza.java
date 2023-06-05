@@ -3,6 +3,7 @@ package org.java.best.pojo;
 
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -38,12 +39,14 @@ public class Pizza {
 	
 	
 	public Pizza() { }
-	public Pizza(String nome, String descrizione, String foto, int price) {
+	public Pizza(String nome, String descrizione, String foto, int price, Ingrediente... ingredienti) {
 		
 		setNome(nome);
 		setDescrizione(descrizione);
 		setFoto(foto);
 		setPrice(price);
+		
+		setIngredienti(ingredienti);
 	}
 	
 	
@@ -82,6 +85,18 @@ public class Pizza {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	
+	public List<Ingrediente> getIngredienti() {
+		return ingredienti;
+	}
+	
+	public void setIngredienti(List<Ingrediente> ingredienti) {
+		this.ingredienti = ingredienti;
+	}
+
+	public void setIngredienti(Ingrediente[] ingredienti) {
+		setIngredienti(Arrays.asList(ingredienti));
 	}
 	
 	@Override
